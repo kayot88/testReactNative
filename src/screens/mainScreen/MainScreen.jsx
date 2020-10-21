@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   FlatList,
   Image,
@@ -21,8 +21,15 @@ const MainScreen = ({
     getPhotosThunkCreator();
   }, []);
   const spinner = "spinner";
+
+  const renderCount = useRef(0);
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1;
+  });
+
   const renderFlatListItem = (item) => {
     const { navigate } = navigation;
+
     return (
       <TouchableOpacity
         onPress={() =>
@@ -69,6 +76,11 @@ const MainScreen = ({
     return (
       <>
         <View style={styles.container}>
+          <View style={{ display: "flex", alignItems: "center", marginTop: 5 }}>
+            <Text
+              style={{ color: "#b3bab4" }}
+            >{`Ref work's ${renderCount.current} times`}</Text>
+          </View>
           <FlatList
             keyExtractor={(item) => {
               return item.id;
